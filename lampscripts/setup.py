@@ -54,7 +54,7 @@ def InitialFunction():
                 writeToLog("lamp mac address : " + config.mac + "ID : " + config.lampId + " ----- URL : "
                            + config.fetchUrl + "\n")
 
-                f = open("config.txt", "a+")
+                f = open("../textfiles/config.txt", "a+")
                 f.write(config.lampId + "\n")
                 f.write(config.fetchUrl + "\n")
                 f.write(config.mac + "\n")
