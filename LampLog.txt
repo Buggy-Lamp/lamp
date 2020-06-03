@@ -1,0 +1,3 @@
+[2020-06-03 18:42:19.244] Starting up attempting to connect to server
+[2020-06-03 18:42:19.249] Something went wrong getting the data please validate your settings. attempting to do it again! 
+[2020-06-03 18:42:19.254] error type was <class 'ValueError'>

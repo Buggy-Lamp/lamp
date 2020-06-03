@@ -10,9 +10,9 @@ import sys
 import time
 import urllib.request
 from crontab import CronTab
-from lampscripts import config
-from lampscripts.utils import writeToLog
-from lampscripts.test import talk_to_lamp
+import config
+from utils import writeToLog
+from test import talk_to_lamp
 
 
 def create_cron_job():
@@ -27,7 +27,7 @@ def create_cron_job():
 
 def InitialFunction():
     try:
-        f = open("../textfiles/config.txt", "r")
+        f = open("config.txt", "r")
         info = f.readlines()
         config.lampId = info[0].strip("\n")
         config.fetchUrl = info[1].strip("\n")
@@ -54,7 +54,7 @@ def InitialFunction():
                 writeToLog("lamp mac address : " + config.mac + "ID : " + config.lampId + " ----- URL : "
                            + config.fetchUrl + "\n")
 
-                f = open("../textfiles/config.txt", "a+")
+                f = open("config.txt", "a+")
                 f.write(config.lampId + "\n")
                 f.write(config.fetchUrl + "\n")
                 f.write(config.mac + "\n")

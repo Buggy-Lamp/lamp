@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from lampscripts import config
+import config
 
 
 def getDate():
