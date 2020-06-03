@@ -32,6 +32,7 @@ def InitialFunction():
         config.lampId = info[0].strip("\n")
         config.fetchUrl = info[1].strip("\n")
         config.mac = info[2].strip("\n")
+        config.logFile = info[3].strip("\n")
         f.close()
 
         writeToLog("Config found using previous data" + "\n")
@@ -58,6 +59,7 @@ def InitialFunction():
                 f.write(config.lampId + "\n")
                 f.write(config.fetchUrl + "\n")
                 f.write(config.mac + "\n")
+                f.write(config.logFile + "\n")
                 f.close()
 
                 # we did it boys now lets create a cron job
