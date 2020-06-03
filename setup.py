@@ -18,7 +18,7 @@ from test import talk_to_lamp
 def create_cron_job():
     try:
         my_cron = CronTab(user="pi")
-        job = my_cron.new(command="sudo python3 ~/Desktop/lamp/lampscripts/setup.py")
+        job = my_cron.new(command="sudo python3 ~/Desktop/lamp/setup.py")
         job.minute.every(1)
         my_cron.write()
     except:
