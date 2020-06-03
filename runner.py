@@ -14,7 +14,6 @@ def Run():
           "terminate the process")
     print("If however you do fully run through the setup and only notice your mistake afterwards \nplease delete the "
           "config.txt file that should be located under the default users home folder by default : /home/pi \n")
-    # setup.InitialFunction()
     ask_setup_url()
 
 
