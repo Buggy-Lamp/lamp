@@ -10,9 +10,9 @@ import sys
 import time
 import urllib.request
 from crontab import CronTab
-import config
-from utils import writeToLog
-from test import talk_to_lamp
+from lampscripts import config
+from lampscripts.utils import writeToLog
+from lampscripts.test import talk_to_lamp
 
 
 def create_cron_job():

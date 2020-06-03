@@ -1,7 +1,7 @@
 import urllib.request, json
 from magicblue import MagicBlue
-import config
-from utils import writeToLog
+from lampscripts import config
+from lampscripts.utils import writeToLog
 
 
 def talk_to_lamp():
