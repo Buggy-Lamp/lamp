@@ -6,5 +6,5 @@ sudo pip3 install python-crontab
 
 once done run
 ```
-sudo python3 ~/Desktop/lamp/setup.py
+sudo python3 ~/Desktop/lamp/runner.py
 ```
