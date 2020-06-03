@@ -27,7 +27,7 @@ def create_cron_job():
 
 def InitialFunction():
     try:
-        f = open("textfiles/config.txt", "r")
+        f = open("../textfiles/config.txt", "r")
         info = f.readlines()
         config.lampId = info[0].strip("\n")
         config.fetchUrl = info[1].strip("\n")
