@@ -43,6 +43,7 @@ def InitialFunction():
     except FileNotFoundError:
         writeToLog("Starting up attempting to connect to server" + "\n")
         try:
+            # TODO please set initial fetch url in config!!!!!
             with urllib.request.urlopen(config.setupUrl) as url:
 
                 data = json.loads(url.read().decode())
