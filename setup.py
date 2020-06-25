@@ -21,55 +21,71 @@ def create_cron_job():
         job = my_cron.new(command="sudo python3 ~/Desktop/lamp/cronjob.py")
         job.minute.every(1)
         my_cron.write()
+        print("cron job created")
     except:
         writeToLog("!!!SEVERE!!!\n something went wrong creating the cron job \n !!!SEVERE!!!")
+        print("failed to create cronjob")
 
 
 def InitialFunction():
     try:
         f = open("config.txt", "r")
         info = f.readlines()
-        config.lampId = info[0].strip("\n")
-        config.fetchUrl = info[1].strip("\n")
-        config.mac = info[2].strip("\n")
-        config.logFile = info[3].strip("\n")
+        # config.lampId = info[0].strip("\n")
+        config.url = info[0].strip("\n")
+        config.mac = info[1].strip("\n")
+        config.logFile = info[2].strip("\n")
         f.close()
 
+        print("Config found using previous data" + "\n")
+        print("lamp mac address : " + config.mac +
+              " ----- URL : " + config.url
+              + "\n")
+
         writeToLog("Config found using previous data" + "\n")
-        writeToLog("lamp mac address : " + config.mac + " ID : " + config.lampId + " ----- URL : " + config.fetchUrl
+        writeToLog("lamp mac address : " + config.mac +
+                   " ----- URL : " + config.url
                    + "\n")
         talk_to_lamp()
 
     except FileNotFoundError:
+        print("Starting up attempting to connect to server" + "\n")
         writeToLog("Starting up attempting to connect to server" + "\n")
         try:
             # TODO please set initial fetch url in config!!!!!
             with urllib.request.urlopen(config.setupUrl) as url:
 
                 data = json.loads(url.read().decode())
-                config.lampId = data["lampId"]
-                config.fetchUrl = data["fetchUrl"]
+                # config.lampId = data["lampId"]
+                config.url = data["url"]
                 config.mac = data["mac"]
 
+                print("Retrieved data from server" + "\n")
+                print("lamp mac address : " + config.mac +
+                      " ----- URL : " +
+                      config.url + "\n")
                 writeToLog("Retrieved data from server" + "\n")
-                writeToLog("lamp mac address : " + config.mac + "ID : " + config.lampId + " ----- URL : "
-                           + config.fetchUrl + "\n")
+                writeToLog("lamp mac address : " + config.mac +
+                           " ----- URL : " +
+                           config.url + "\n")
 
+                print("saving to config")
                 f = open("config.txt", "a+")
-                f.write(config.lampId + "\n")
-                f.write(config.fetchUrl + "\n")
+                f.write(config.url + "\n")
                 f.write(config.mac + "\n")
                 f.write(config.logFile + "\n")
                 f.close()
 
                 # we did it boys now lets create a cron job
+                print("create cronjob")
                 create_cron_job()
                 talk_to_lamp()
 
         except Exception:
+            print("Something went wrong getting the data please validate your settings. attempting "
+                  "to do it again! in 60 seconds \n")
             writeToLog("Something went wrong getting the data please validate your settings. attempting "
                        "to do it again! \n")
             writeToLog("error type was " + str(sys.exc_info()[0]) + "\n")
             time.sleep(60)
             InitialFunction()
-
