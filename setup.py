@@ -23,7 +23,7 @@ def create_cron_job():
         my_cron.write()
         print("cron job created")
     except:
-        writeToLog("!!!SEVERE!!!\n something went wrong creating the cron job \n !!!SEVERE!!!")
+        writeToLog("!!!SEVERE!!!\n something went wrong creating the cron job \n !!!SEVERE!!!\n")
         print("failed to create cronjob")
 
 

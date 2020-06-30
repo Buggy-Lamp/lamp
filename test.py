@@ -12,7 +12,7 @@ def talk_to_lamp():
     try:
         bulb.connect()
     except:
-        writeToLog("!!!SEVERE!!!\n something went wrong connecting to lamp \n !!!SEVERE!!!")
+        writeToLog("!!!SEVERE!!!\n something went wrong connecting to lamp \n !!!SEVERE!!!\n")
     try:
         with urllib.request.urlopen(config.url) as url:
             data = json.loads(url.read().decode())
