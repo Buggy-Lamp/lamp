@@ -12,7 +12,7 @@ import urllib.request
 from crontab import CronTab
 import config
 from utils import writeToLog
-from test import talk_to_lamp
+from lamp_controller import talk_to_lamp
 
 
 def create_cron_job():
@@ -31,43 +31,32 @@ def InitialFunction():
     try:
         f = open("config.txt", "r")
         info = f.readlines()
-        # config.lampId = info[0].strip("\n")
         config.url = info[0].strip("\n")
         config.mac = info[1].strip("\n")
         config.logFile = info[2].strip("\n")
         f.close()
 
         print("Config found using previous data" + "\n")
-        print("lamp mac address : " + config.mac +
-              " ----- URL : " + config.url
-              + "\n")
+        print(f"lamp mac address : {config.mac}----- URL : {config.url}\n")
 
         writeToLog("Config found using previous data" + "\n")
-        writeToLog("lamp mac address : " + config.mac +
-                   " ----- URL : " + config.url
-                   + "\n")
+        writeToLog(f"lamp mac address : {config.mac}----- URL : {config.url}\n")
         talk_to_lamp()
 
     except FileNotFoundError:
-        print("Starting up attempting to connect to server" + "\n")
-        writeToLog("Starting up attempting to connect to server" + "\n")
+        print("Starting up attempting to connect to server \n")
+        writeToLog("Starting up attempting to connect to server \n")
         try:
-            # TODO please set initial fetch url in config!!!!!
             with urllib.request.urlopen(config.setupUrl) as url:
 
                 data = json.loads(url.read().decode())
-                # config.lampId = data["lampId"]
                 config.url = data["url"]
                 config.mac = data["mac"]
 
-                print("Retrieved data from server" + "\n")
-                print("lamp mac address : " + config.mac +
-                      " ----- URL : " +
-                      config.url + "\n")
-                writeToLog("Retrieved data from server" + "\n")
-                writeToLog("lamp mac address : " + config.mac +
-                           " ----- URL : " +
-                           config.url + "\n")
+                print("Retrieved data from server \n")
+                print(f"lamp mac address : {config.mac} ----- URL : {config.url} \n")
+                writeToLog("Retrieved data from server \n")
+                writeToLog(f"lamp mac address : {config.mac} ----- URL : {config.url} \n")
 
                 print("saving to config")
                 f = open("config.txt", "a+")
@@ -87,5 +76,6 @@ def InitialFunction():
             writeToLog("Something went wrong getting the data please validate your settings. attempting "
                        "to do it again! \n")
             writeToLog("error type was " + str(sys.exc_info()[0]) + "\n")
+            print(f"_________________\n Developer info\n {sys.exc_info()}")
             time.sleep(60)
             InitialFunction()

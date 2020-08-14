@@ -1,20 +1,40 @@
 import config
 from setup import InitialFunction
-from os import path
+import os
 
 
 def Run():
+    firstTime()
+
+
+def firstTime():
+    if os.path.isfile("~/config.txt"):
+        reset = input("It seems like you already set everything up do you wanna do it again?")
+        if validate(reset):
+            reset_config()
+        else:
+            exit()
+    else:
+        start_setup()
+
+
+def start_setup():
     print("""               _               __  __ _____     _____ ______ _______ _    _ _____  
-              | |        /\   |  \/  |  __ \   / ____|  ____|__   __| |  | |  __ \ 
-              | |       /  \  | \  / | |__) | | (___ | |__     | |  | |  | | |__) |
-              | |      / /\ \ | |\/| |  ___/   \___ \|  __|    | |  | |  | |  ___/ 
-              | |____ / ____ \| |  | | |       ____) | |____   | |  | |__| | |     
-              |______/_/    \_\_|  |_|_|      |_____/|______|  |_|   \____/|_| \n""")
-    print("Please note you can only fully run this setup once. \nIf you make any mistake and notice too late please "
-          "terminate the process")
-    print("If however you do fully run through the setup and only notice your mistake afterwards \nplease delete the "
-          "config.txt file that should be located under the default users home folder by default : /home/pi/ \n")
+                      | |        /\   |  \/  |  __ \   / ____|  ____|__   __| |  | |  __ \ 
+                      | |       /  \  | \  / | |__) | | (___ | |__     | |  | |  | | |__) |
+                      | |      / /\ \ | |\/| |  ___/   \___ \|  __|    | |  | |  | |  ___/ 
+                      | |____ / ____ \| |  | | |       ____) | |____   | |  | |__| | |     
+                      |______/_/    \_\_|  |_|_|      |_____/|______|  |_|   \____/|_| \n""")
     ask_setup_url()
+
+
+
+def reset_config():
+    file = open("config.txt","w")
+    file.close()
+    print("Config file emptied.")
+
+    start_setup()
 
 
 def validate(userInput):
@@ -28,7 +48,7 @@ def validate(userInput):
 
 def ask_setup_url():
     s = input("please input setup Url \n")
-    print("is this the correct URL? \n" + s)
+    print(f"is this the correct URL? \n {s}")
     url_ans = input("Y/N \n")
     if validate(url_ans):
         config.setupUrl = s
@@ -39,13 +59,12 @@ def ask_setup_url():
 
 def ask_log_path():
     print("where would you like to save your logs please provide the full path")
-    print("do NOT add any / or \\ to the end and DONT specify a file name just the location")
-    print("path with forwards slashes \"/\" not \"\\\"")
     print("Example : /home/pi/Desktop")
     s = input()
-    print("is this the correct Path? \n" + s)
+    s.replace("\\","/")
+    print(f"is this the correct Path? \n {s}")
     path_ans = input("Y/N \n")
-    if path.exists(s) and "\\" not in s:
+    if os.path.exists(s) and "\\" not in s:
         if validate(path_ans):
             config.logFile = s + "/LampLogs.txt"
             print(config.logFile)
